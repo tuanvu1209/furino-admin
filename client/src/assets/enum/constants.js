@@ -1,4 +1,4 @@
-export const baseURL = 'http://localhost:3001/admin/';
+export const baseURL = 'https://furino-admin-server.vercel.app/admin/';
 export const optionLimit = [10, 20, 40];
 export const roleListDefault = [
   { value: 0, name: 'SuperAdmin' },

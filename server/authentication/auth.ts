@@ -12,7 +12,8 @@ export default function checkToken(
     '/admin/users/register',
     '/admin/products',
     '/admin/categories',
-    '/admin'
+    '/admin',
+    '/',
   ];
 
   const url = req.url.toLowerCase().trim();
