@@ -50,7 +50,6 @@ const userManagementSlice = createSlice({
 
       // login
       .addCase(loginUser.fulfilled, (state, action) => {
-        console.log(action);
         toast.success('Login Success');
         state.user = action.payload;
         state.token = action.payload.token

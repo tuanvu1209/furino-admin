@@ -204,7 +204,6 @@ const insertProduct = async ({
   productInventories,
   productImages,
 }: ProductInsert) => {
-  console.log( name, description, productCategories, productGeneralImages, productImages, productInventories);
 
   const t = await sequelize.transaction();
 
@@ -305,7 +304,6 @@ const updateProduct = async ({
   productImages,
   productInventories,
 }: ProductUpdate) => {
-  console.log(productId, name, description, productCategories, productGeneralImages, productImages, productInventories);
   
   const t = await sequelize.transaction();
   try {

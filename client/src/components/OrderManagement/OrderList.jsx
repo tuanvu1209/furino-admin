@@ -54,8 +54,6 @@ const OrderList = ({ orders, limitOffset }) => {
   const [openModal, setOpenModal] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-  console.log(orders);
-
   //modal
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);

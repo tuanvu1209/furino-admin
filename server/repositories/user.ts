@@ -48,8 +48,6 @@ const login = async ({
       }
     );
 
-    console.log(user.role.roleId);
-
     const adminRole = [0, 1];
 
     if (adminRole.includes(user.roleId)) {

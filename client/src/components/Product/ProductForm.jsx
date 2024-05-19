@@ -62,7 +62,6 @@ function ProductForm({ onClose, product, action, limitOffset }) {
   const [productImages, setProductImages] = useState([
     { image: null, productColorId: null, name: null },
   ]);
-  console.log(productInventories);
   const [productGeneralImages, setProductGeneralImages] = useState(
     product?.productGeneralImages.length > 0
       ? product?.productGeneralImages.map((item) => item.image)

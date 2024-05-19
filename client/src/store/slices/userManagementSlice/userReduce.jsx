@@ -36,7 +36,6 @@ const createUser = createAsyncThunk(
   'CREATE_USER',
   async ({ dataRequest, limitOffset }, thunkAPI) => {
     try {
-      console.log(dataRequest);
       thunkAPI.dispatch(handleLoadingButton(true));
       await axios.post(`${baseURL}users/register`, dataRequest, {
         headers: {

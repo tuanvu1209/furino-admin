@@ -146,8 +146,6 @@ const searchProduct = async (req: Request, res: Response) => {
 
 const getProductColors = async (req: Request, res: Response) => {
   try {
-    console.log('getProductColors');
-    
     const colors = await productRepository.getProductColors();
     res.status(HttpStatusCode.OK).json(colors);
   } catch (exception: any) {

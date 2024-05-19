@@ -79,14 +79,12 @@ const AccountList = ({ accounts, limitOffset }) => {
     const newDisableList = disableMenu.filter((item) =>
       params.status === 'Enable' ? item.value === 0 : item.value === 1
   );
-  console.log(newDisableList);
     setDisableList(newDisableList);
     setMenuDisable(event.currentTarget);
     setUser(params);
   };
 
   const handleSubmit = () => {
-    console.log(dataRequest);
     dispatch(updateUser({ dataRequest, limitOffset }));
   };
 
