@@ -93,14 +93,14 @@ function Login() {
                 <div className='flex flex-col justify-center items-center '>
                   <ButtonSubmit content={'login'} />
                 </div>
-                <h5 className='text-[16px] pt-[15px] mx-auto '>
+                {/* <h5 className='text-[16px] pt-[15px] mx-auto '>
                   Don't have an account
                   <span className='ml-[5px]'>
                     <Link className='text-[#2F3F73] font-bold' to='/register'>
                       Sign up
                     </Link>
                   </span>
-                </h5>
+                </h5> */}
               </form>
             </div>
           </div>

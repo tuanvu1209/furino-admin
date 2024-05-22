@@ -18,6 +18,7 @@ import { useState } from 'react';
 const validationSchema = Yup.object().shape({
   name: Yup.string().required('Name is required'),
   email: Yup.string().required('Email is required'),
+  phone: Yup.string().required('Phone is required'),
   password: Yup.string().required('Password is required'),
 });
 
@@ -31,6 +32,7 @@ function AccountForm({ action, account, onClose, limitOffset }) {
   const initialValues = {
     name: account ? account.name : '',
     email: account ? account.email : '',
+    phone: account ? account.phone : '',
     password: account ? account.password : '',
   };
   const handleSubmit = (dataRequest) => {
@@ -86,6 +88,26 @@ function AccountForm({ action, account, onClose, limitOffset }) {
               />
               <ErrorMessage
                 name='email'
+                component='div'
+                className='text-red-500 text-sm'
+              />
+            </div>
+            <div className='mb-4'>
+              <label
+                htmlFor='phone'
+                className='block text-sm font-medium text-black'
+              >
+                Phone:
+              </label>
+              <Field
+                type='text'
+                id='phone'
+                name='phone'
+                autoComplete='new-password'
+                className='mt-1 p-2 border border-[#C4C4C4] rounded w-full outline-none'
+              />
+              <ErrorMessage
+                name='phone'
                 component='div'
                 className='text-red-500 text-sm'
               />
