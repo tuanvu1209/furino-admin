@@ -11,6 +11,7 @@ import {
   ProductSize,
 } from './Product';
 import { Role, User } from './User';
+import Notification from './Notification';
 export {
   Cart,
   Category, Order,
@@ -22,6 +23,7 @@ export {
   ProductInventory,
   ProductSize,
   Role,
-  User
+  User,
+  Notification
 };
 

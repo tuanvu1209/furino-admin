@@ -1,6 +1,7 @@
 import { Op } from 'sequelize';
 import sequelize from '../database/sequelize';
 import Exception from '../exceptions/Exception';
+import { colors, sizes } from '../global/constants';
 import {
   Category,
   Product,
@@ -11,8 +12,7 @@ import {
   ProductInventory,
   ProductSize,
 } from '../models/index';
-import { CartProp, ProductInsert, ProductUpdate } from '../types/product';
-import { colors, sizes } from '../global/constants';
+import { ProductInsert, ProductUpdate } from '../types/product';
 
 const getProducts = async (
   limit: number,
@@ -124,78 +124,6 @@ const getProducts = async (
   }
 };
 
-const getProductById = async (productId: number) => {
-  try {
-    const product = await Product.findByPk(productId, {
-      attributes: [
-        'productId',
-        'name',
-        'description',
-        'quantity',
-        [
-          sequelize.fn(
-            'to_char',
-            sequelize.col('createdAt'),
-            'YYYY-MM-DD HH24:MI:SS'
-          ),
-          'createdAt',
-        ],
-        [
-          sequelize.fn(
-            'to_char',
-            sequelize.col('updatedAt'),
-            'YYYY-MM-DD HH24:MI:SS'
-          ),
-          'updatedAt',
-        ],
-      ],
-      include: [
-        {
-          model: ProductCategory,
-          attributes: ['categoryId'],
-          include: [
-            {
-              model: Category,
-              attributes: ['name', 'image'],
-            },
-          ],
-        },
-        {
-          model: ProductInventory,
-          order: [['productSizeId', 'ASC']],
-          attributes: ['quantity', 'sold', 'price', 'priceDiscount'],
-          include: [
-            {
-              model: ProductSize,
-              attributes: ['productSizeId', 'name'],
-            },
-            {
-              model: ProductColor,
-              attributes: ['productColorId', 'hex', 'name'],
-            },
-          ],
-        },
-        {
-          model: ProductGeneralImage,
-          attributes: ['image'],
-        },
-        {
-          model: ProductImage,
-          attributes: ['image', 'productColorId'],
-        },
-      ],
-    });
-
-    if (!product) {
-      throw new Error(Exception.PRODUCT_NOT_FOUND);
-    }
-
-    return product;
-  } catch (exception: any) {
-    throw new Error(exception.message);
-  }
-};
-
 const insertProduct = async ({
   name,
   description,
@@ -204,7 +132,6 @@ const insertProduct = async ({
   productInventories,
   productImages,
 }: ProductInsert) => {
-
   const t = await sequelize.transaction();
 
   try {
@@ -304,7 +231,6 @@ const updateProduct = async ({
   productImages,
   productInventories,
 }: ProductUpdate) => {
-  
   const t = await sequelize.transaction();
   try {
     const updateFields: any = {};
@@ -397,130 +323,6 @@ const updateProduct = async ({
   }
 };
 
-const getCount = async (keyword: string, categoryIds: number[]) => {
-  try {
-    const whereCondition: any = {
-      name: {
-        [Op.iLike]: `%${keyword}%`,
-      },
-    };
-
-    const whereCategory: { categoryId?: number[] } = {};
-
-    if (categoryIds.length > 0) {
-      whereCategory.categoryId = categoryIds;
-    }
-
-    const count = await Product.findAll({
-      where: whereCondition,
-      include: [
-        {
-          model: ProductCategory,
-          where: whereCategory,
-        },
-      ],
-    });
-
-    return count.length;
-  } catch (exception: any) {
-    throw new Error(exception.message);
-  }
-};
-
-const getCarts = async (carts: CartProp[]) => {
-  try {
-    const data = await Promise.all(
-      carts.map(async (cart) => {
-        const { productId, productColorId, productSizeId, quantity } = cart;
-        const product: any = await Product.findByPk(productId, {
-          attributes: ['productId', 'name'],
-          include: [
-            {
-              model: ProductInventory,
-              attributes: ['price', 'priceDiscount', 'quantity'],
-              include: [
-                {
-                  model: ProductSize,
-                  where: { productSizeId },
-                  attributes: ['productSizeId', 'name'],
-                },
-                {
-                  model: ProductColor,
-                  where: { productColorId },
-                  attributes: ['productColorId', 'hex', 'name'],
-                },
-              ],
-            },
-          ],
-        });
-
-        if (product) {
-          const productInventory = product.productInventories[0];
-          if (productInventory.quantity < quantity) {
-            return {
-              productId,
-              error: 'Not enough quantity',
-            };
-          }
-
-          return {
-            productId,
-            name: product.name,
-            price: productInventory.price,
-            priceDiscount: productInventory.priceDiscount,
-            quantity,
-            productColor: productInventory.productColor,
-            productSize: productInventory.productSize,
-          };
-        }
-
-        return {
-          productId,
-          error: 'Product not found',
-        };
-      })
-    );
-    return data;
-  } catch (exception: any) {
-    throw new Error(exception.message);
-  }
-};
-
-const searchProduct = async ({
-  keyword,
-  limit,
-}: {
-  keyword: string;
-  limit: number;
-}) => {
-  try {
-    const products = await Product.findAll({
-      limit: limit,
-      where: {
-        name: {
-          [Op.iLike]: `%${keyword}%`,
-        },
-      },
-      include: [
-        {
-          model: ProductGeneralImage,
-          limit: 1,
-          attributes: ['image'],
-        },
-        {
-          model: ProductInventory,
-          limit: 1,
-        },
-      ],
-      attributes: ['productId', 'name'],
-    });
-
-    return products;
-  } catch (exception: any) {
-    throw new Error(exception.message);
-  }
-};
-
 const getProductColors = async () => {
   try {
     const colors = await ProductColor.findAll();
@@ -528,7 +330,7 @@ const getProductColors = async () => {
   } catch (exception: any) {
     throw new Error(exception.message);
   }
-}
+};
 
 const getProductSizes = async () => {
   try {
@@ -537,17 +339,13 @@ const getProductSizes = async () => {
   } catch (exception: any) {
     throw new Error(exception.message);
   }
-}
+};
 
 export default {
   getProducts,
   insertProduct,
-  getProductById,
   deleteProduct,
   updateProduct,
-  getCount,
-  getCarts,
-  searchProduct,
   getProductColors,
-  getProductSizes
+  getProductSizes,
 };

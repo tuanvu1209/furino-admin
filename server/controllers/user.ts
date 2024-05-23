@@ -45,16 +45,6 @@ const updateUser = async (req: Request, res: Response) => {
   }
 };
 
-const getUserById = async (req: Request, res: Response) => {
-  try {
-    const { userId } = req.params;
-    const user = await userRepository.getUserById(Number(userId));
-    res.status(HttpStatusCode.OK).json(user);
-  } catch (exception: any) {
-    res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json(exception.toString());
-  }
-};
-
 const getUsers = async (req: Request, res: Response) => {
   try {
     const users = await userRepository.getUsers();
@@ -69,5 +59,4 @@ export default {
   register,
   updateUser,
   getUsers,
-  getUserById,
 };

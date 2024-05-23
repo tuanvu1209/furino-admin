@@ -143,30 +143,6 @@ const updateUser = async ({
   }
 };
 
-const getUserById = async (userId: number) => {
-  try {
-    const user = await User.findOne({
-      where: {
-        userId,
-      },
-      include: [
-        {
-          model: Role,
-          as: 'role',
-        },
-      ],
-    });
-
-    if (!user) {
-      throw new Exception(Exception.USER_NOT_FOUND);
-    }
-
-    return user;
-  } catch (exception: any) {
-    throw new Exception(exception.message);
-  }
-};
-
 const getUsers = async () => {
   try {
     const users = await User.findAll({
@@ -190,5 +166,4 @@ export default {
   register,
   updateUser,
   getUsers,
-  getUserById,
 };

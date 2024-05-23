@@ -2,6 +2,7 @@ import sequelize from '../database/sequelize';
 import Exception from '../exceptions/Exception';
 import {
   Cart,
+  Notification,
   Order,
   OrderItem,
   Product,
@@ -11,6 +12,7 @@ import {
   ProductSize,
   User,
 } from '../models/index';
+import { io } from '../server';
 import { statusDefault } from '../utils/constants/status';
 
 const insertOrder = async ({
@@ -158,104 +160,6 @@ const insertOrder = async ({
   }
 };
 
-const getOrderByUserId = async ({
-  userId,
-  status,
-}: {
-  userId: number;
-  status: number;
-}) => {
-  try {
-    const statusQuery = statusDefault.find((s) => s.id === status);
-    const order: any = await Order.findAll({
-      where: {
-        userId,
-        orderStatus: statusQuery?.id,
-      },
-      include: [
-        {
-          model: OrderItem,
-          attributes: ['orderId', 'productId', 'quantity', 'price'],
-          include: [
-            {
-              model: ProductColor,
-            },
-            { model: ProductSize },
-            {
-              model: Product,
-              attributes: ['productId', 'name'],
-              include: [
-                {
-                  model: ProductImage,
-                  attributes: ['image', 'productColorId'],
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    });
-
-    const plainOrder = order.map(
-      (o: { get: (arg0: { plain: boolean }) => any }) => o.get({ plain: true })
-    );
-
-    plainOrder.forEach(async (o: any) => {
-      o.orderItems.forEach((item: any) => {
-        item.product.productImages = item.product.productImages.find(
-          (image: any) =>
-            image.productColorId === item.productColor.productColorId
-        ).image;
-      });
-    });
-
-    return plainOrder;
-  } catch (error: any) {
-    throw new Error(error.message);
-  }
-};
-
-const getOrderById = async (orderId: number) => {
-  try {
-    const order: any = await Order.findByPk(orderId, {
-      include: [
-        {
-          model: OrderItem,
-          attributes: ['orderId', 'productId', 'quantity', 'price'],
-          include: [
-            {
-              model: ProductColor,
-            },
-            { model: ProductSize },
-            {
-              model: Product,
-              attributes: ['productId', 'name'],
-              include: [
-                {
-                  model: ProductImage,
-                  attributes: ['image', 'productColorId'],
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    });
-
-    const plainOrder = order.get({ plain: true });
-
-    plainOrder.orderItems.forEach((item: any) => {
-      item.product.productImages = item.product.productImages.find(
-        (image: any) =>
-          image.productColorId === item.productColor.productColorId
-      ).image;
-    });
-
-    return plainOrder;
-  } catch (error: any) {
-    throw new Error(error.message);
-  }
-};
 
 const updateOrder = async ({
   orderId,
@@ -308,6 +212,38 @@ const updateOrder = async ({
         })
       );
     }
+
+    const notificationTitle = `Order #${order.orderId} has been ${
+      statusDefault.find((s) => s.id === status)?.name
+    }`;
+
+    const notificationMessage = () => {
+      switch (status) {
+        case 2:
+          return 'Your order has been delivered';
+        case 3:
+          return 'Your order has been cancelled';
+        default:
+          return '';
+      }
+    };
+
+    await Notification.create(
+      {
+        userId: order.userId,
+        orderId,
+        title: notificationTitle,
+        message: notificationMessage(),
+        notificationDate: new Date(),
+      },
+      { transaction: t }
+    );
+
+    io.emit('orderUpdate', {
+      orderId: order.orderId,
+      status: status,
+      message: notificationMessage(),
+    });
 
     await t.commit();
 
@@ -364,8 +300,6 @@ const getOrders = async () => {
 
 export default {
   insertOrder,
-  getOrderByUserId,
-  getOrderById,
   updateOrder,
   getOrders
 };

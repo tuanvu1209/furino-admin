@@ -30,16 +30,6 @@ async function getProducts(req: Request, res: Response) {
   }
 }
 
-async function getProductById(req: Request, res: Response) {
-  try {
-    const productId = Number(req.params.productId);
-    const product = await productRepository.getProductById(productId);
-    res.status(HttpStatusCode.OK).json(product);
-  } catch (exception: any) {
-    res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json(exception.toString());
-  }
-}
-
 const insertProduct = async (req: Request, res: Response) => {
   try {
     debugger;
@@ -103,47 +93,6 @@ async function deleteProduct(req: Request, res: Response) {
   }
 }
 
-async function getCount(req: Request, res: Response) {
-  try {
-    const { keyword = '', categoryIds = '' } = req.query;
-    const count = await productRepository.getCount(
-      keyword.toString(),
-      categoryIds
-        .toString()
-        .split(',')
-        .filter((id) => id.trim() !== '')
-        .map((id: string) => Number(id))
-    );
-    res.status(HttpStatusCode.OK).json(count);
-  } catch (exception: any) {
-    res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json(exception.toString());
-  }
-}
-
-async function getCarts(req: Request, res: Response) {
-  try {
-    const carts = req.body.carts;
-    const data = await productRepository.getCarts(carts);
-    res.status(HttpStatusCode.OK).json(data);
-  } catch (exception: any) {
-    res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json(exception.toString());
-  }
-}
-
-const searchProduct = async (req: Request, res: Response) => {
-  try {
-    const keyword = req.params.keyword;
-    const { limit } = req.query;
-    const products = await productRepository.searchProduct({
-      keyword,
-      limit: Number(limit),
-    });
-    res.status(HttpStatusCode.OK).json(products);
-  } catch (exception: any) {
-    res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json(exception.toString());
-  }
-};
-
 const getProductColors = async (req: Request, res: Response) => {
   try {
     const colors = await productRepository.getProductColors();
@@ -167,10 +116,6 @@ export default {
   updateProduct,
   deleteProduct,
   insertProduct,
-  getProductById,
-  getCount,
-  getCarts,
-  searchProduct,
   getProductColors,
   getProductSizes
 };
