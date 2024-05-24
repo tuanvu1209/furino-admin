@@ -15,7 +15,7 @@ import {
 } from './routes/index';
 
 dotenv.config();
-export const userSockets = new Map();
+// export const userSockets = new Map();
 
 const app = express();
 // const server = http.createServer(app);
