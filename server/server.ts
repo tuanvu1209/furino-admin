@@ -18,12 +18,12 @@ dotenv.config();
 
 const app = express();
 const server = http.createServer(app);
-export const io = new Server(server, {
-  cors: {
-    origin: '*',
-    methods: ['GET', 'POST'],
-  },
-});
+// export const io = new Server(server, {
+//   cors: {
+//     origin: '*',
+//     methods: ['GET', 'POST'],
+//   },
+// });
 // export const userSockets = new Map();
 const port = process.env.PORT ?? 3001;
 
@@ -54,7 +54,7 @@ app.get('/admin', (req, res) => {
   res.send('response from root router admin');
 });
 
-server.listen(port, async () => {
+app.listen(port, async () => {
   await connect();
   console.log(`listening on port: ${port}`);
 });
