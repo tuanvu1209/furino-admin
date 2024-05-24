@@ -54,7 +54,7 @@ app.get('/admin', (req, res) => {
   res.send('response from root router admin');
 });
 
-app.listen(port, async () => {
+server.listen(port, async () => {
   await connect();
   console.log(`listening on port: ${port}`);
 });
@@ -77,4 +77,4 @@ io.on('connection', (socket) => {
   });
 });
 
-export { io, userSockets };
+// export { io, userSockets };
