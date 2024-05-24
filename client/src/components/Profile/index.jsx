@@ -124,7 +124,7 @@ export function Profile() {
         aria-describedby='modal-modal-description'
       >
         <Box sx={style}>
-          <div className='p-5'>
+          <div className=''>
             <h2 className='text-xl font-bold text-black text-auto'>
               Are you sure you want Logout?
             </h2>

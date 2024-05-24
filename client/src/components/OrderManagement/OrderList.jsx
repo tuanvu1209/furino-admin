@@ -268,7 +268,7 @@ const OrderList = ({ orders, limitOffset }) => {
 
   const ChangeStatus = () => {
     return (
-      <div className='p-5'>
+      <div className=''>
         <h2 className='text-xl font-bold text-black text-auto'>
           Are you sure you want change status to{' '}
           {dataChange?.status == 0

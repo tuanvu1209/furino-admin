@@ -14,7 +14,7 @@ const getAccounts = createAsyncThunk(
   async ({ limit, page }, thunkAPI) => {
     try {
       thunkAPI.dispatch(handleLoading(true));
-      const accounts = await axios.get(`${baseURL}users`, {
+      const accounts = await axios.get(`${baseURL}/users`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -37,7 +37,7 @@ const createUser = createAsyncThunk(
   async ({ dataRequest, limitOffset }, thunkAPI) => {
     try {
       thunkAPI.dispatch(handleLoadingButton(true));
-      await axios.post(`${baseURL}users/register`, dataRequest, {
+      await axios.post(`${baseURL}/users/register`, dataRequest, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -45,7 +45,7 @@ const createUser = createAsyncThunk(
       thunkAPI.dispatch(handleLoadingButton(false));
 
       thunkAPI.dispatch(handleLoading(true));
-      const accounts = await axios.get(`${baseURL}users`, {
+      const accounts = await axios.get(`${baseURL}/users`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -67,7 +67,7 @@ const loginUser = createAsyncThunk('LOGIN', async (dataRequest, thunkAPI) => {
   try {
     thunkAPI.dispatch(handleLoadingButton(true));
     const response = await axios.post(
-      `${baseURL}users/login`,
+      `${baseURL}/users/login`,
       dataRequest
     );
     thunkAPI.dispatch(handleLoadingButton(false));
@@ -90,7 +90,7 @@ const updateUser = createAsyncThunk(
   async ({ dataRequest, limitOffset }, thunkAPI) => {
     try {
       thunkAPI.dispatch(handleLoadingButton(true));
-      const updateUser = await axios.patch(`${baseURL}users`, dataRequest, {
+      const updateUser = await axios.patch(`${baseURL}/users`, dataRequest, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -99,7 +99,7 @@ const updateUser = createAsyncThunk(
 
       thunkAPI.dispatch(handleLoading(true));
       const { limit, page } = limitOffset;
-      const orders = await axios.get(`${baseURL}users`, {
+      const orders = await axios.get(`${baseURL}/users`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

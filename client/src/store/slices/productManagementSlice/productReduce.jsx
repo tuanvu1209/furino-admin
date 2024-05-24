@@ -10,7 +10,7 @@ const getDataProduct = createAsyncThunk(
   async ({ limit, page, categoryId, keyword }, thunkAPI) => {
     try {
       thunkAPI.dispatch(handleLoading(true));
-      const products = await axios.get(`${baseURL}products`, {
+      const products = await axios.get(`${baseURL}/products`, {
         params: {
           limit,
           page,
@@ -22,7 +22,7 @@ const getDataProduct = createAsyncThunk(
         },
       });
 
-      const categories = await axios.get(`${baseURL}categories`, {
+      const categories = await axios.get(`${baseURL}/categories`, {
         params: {
           limit: 10,
           page: 1,
@@ -32,13 +32,13 @@ const getDataProduct = createAsyncThunk(
         },
       });
 
-      const colors = await axios.get(`${baseURL}products/colors`, {
+      const colors = await axios.get(`${baseURL}/products/colors`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
-      const sizes = await axios.get(`${baseURL}products/sizes`, {
+      const sizes = await axios.get(`${baseURL}/products/sizes`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -64,7 +64,7 @@ const createProduct = createAsyncThunk(
     try {
       thunkAPI.dispatch(handleLoadingButton(true));
       const createdProduct = await axios.post(
-        `${baseURL}products`,
+        `${baseURL}/products`,
         dataRequest,
         {
           headers: {
@@ -79,7 +79,7 @@ const createProduct = createAsyncThunk(
       }
       thunkAPI.dispatch(handleLoadingButton(false));
       thunkAPI.dispatch(handleLoading(true));
-      const products = await axios.get(`${baseURL}products`, {
+      const products = await axios.get(`${baseURL}/products`, {
         params: {
           limit: 1000,
         },
@@ -103,7 +103,7 @@ const deleteProduct = createAsyncThunk(
     try {
       thunkAPI.dispatch(handleLoadingButton(true));
       const deleteProduct = await axios.delete(
-        `${baseURL}products/${productId}`,
+        `${baseURL}/products/${productId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -113,7 +113,7 @@ const deleteProduct = createAsyncThunk(
       thunkAPI.dispatch(handleLoadingButton(false));
       const { limit, page, categoryId, keyword } = limitOffset;
       thunkAPI.dispatch(handleLoading(true));
-      const products = await axios.get(`${baseURL}products`, {
+      const products = await axios.get(`${baseURL}/products`, {
         params: {
           limit,
           page,
@@ -140,7 +140,7 @@ const updateProduct = createAsyncThunk(
     try {
       thunkAPI.dispatch(handleLoadingButton(true));
       const updateProduct = await axios.patch(
-        `${baseURL}products`,
+        `${baseURL}/products`,
         dataRequest,
         {
           headers: {
@@ -153,7 +153,7 @@ const updateProduct = createAsyncThunk(
         return thunkAPI.rejectWithValue(error.message);
       }
       thunkAPI.dispatch(handleLoading(true));
-      const products = await axios.get(`${baseURL}products`, {
+      const products = await axios.get(`${baseURL}/products`, {
         params: {
           limit: 1000,
         },
@@ -176,7 +176,7 @@ const createCategory = createAsyncThunk(
     try {
       thunkAPI.dispatch(handleLoadingButton(true));
       const createCategory = await axios.post(
-        `${baseURL}categories`,
+        `${baseURL}/categories`,
         dataRequest,
         {
           headers: {
@@ -190,7 +190,7 @@ const createCategory = createAsyncThunk(
         return thunkAPI.rejectWithValue(error.message);
       }
       thunkAPI.dispatch(handleLoading(true));
-      const categories = await axios.get(`${baseURL}categories`, {
+      const categories = await axios.get(`${baseURL}/categories`, {
         params: {
           limit: 100,
           page: 1,
@@ -214,7 +214,7 @@ const updateCategory = createAsyncThunk(
     try {
       thunkAPI.dispatch(handleLoadingButton(true));
       const updateCategory = await axios.patch(
-        `${baseURL}categories`,
+        `${baseURL}/categories`,
         dataRequest,
         {
           headers: {
@@ -228,7 +228,7 @@ const updateCategory = createAsyncThunk(
         return thunkAPI.rejectWithValue(error.message);
       }
       thunkAPI.dispatch(handleLoading(true));
-      const categories = await axios.get(`${baseURL}categories`, {
+      const categories = await axios.get(`${baseURL}/categories`, {
         params: {
           limit: 100,
           page: 1,
@@ -252,7 +252,7 @@ const deleteCategory = createAsyncThunk(
     try {
       thunkAPI.dispatch(handleLoadingButton(true));
       const deleteCategory = await axios.delete(
-        `${baseURL}categories/${categoryId}`,
+        `${baseURL}/categories/${categoryId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -262,7 +262,7 @@ const deleteCategory = createAsyncThunk(
       thunkAPI.dispatch(handleLoadingButton(false));
 
       thunkAPI.dispatch(handleLoading(true));
-      const categories = await axios.get(`${baseURL}categories`, {
+      const categories = await axios.get(`${baseURL}/categories`, {
         params: {
           limit: 100,
           page: 1,
@@ -286,7 +286,7 @@ const getOrders = createAsyncThunk(
   async ({ limit, page, status }, thunkAPI) => {
     try {
       thunkAPI.dispatch(handleLoading(true));
-      const result = await axios.get(`${baseURL}orders`, {
+      const result = await axios.get(`${baseURL}/orders`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -310,7 +310,7 @@ const changeStatusOrder = createAsyncThunk(
   async (dataRequest, thunkAPI) => {
     try {
       thunkAPI.dispatch(handleLoadingButton(true));
-      const response = await axios.patch(`${baseURL}orders`, dataRequest, {
+      const response = await axios.patch(`${baseURL}/orders`, dataRequest, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -318,7 +318,7 @@ const changeStatusOrder = createAsyncThunk(
       thunkAPI.dispatch(handleLoadingButton(false));
 
       thunkAPI.dispatch(handleLoading(true));
-      const orders = await axios.get(`${baseURL}orders`, {
+      const orders = await axios.get(`${baseURL}/orders`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

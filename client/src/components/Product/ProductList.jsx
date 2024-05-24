@@ -203,7 +203,7 @@ const ProductList = ({ limitOffset }) => {
       >
         <Box sx={style}>
           {action === 'delete' ? (
-            <div className='p-5'>
+            <div className=''>
               <h2 className='text-xl font-bold text-black text-auto'>
                 Are you sure you want to delete the product?
               </h2>

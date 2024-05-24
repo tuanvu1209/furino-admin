@@ -12,7 +12,7 @@ import {
   ProductSize,
   User,
 } from '../models/index';
-import { io } from '../server';
+import { io, userSockets } from '../server';
 import { statusDefault } from '../utils/constants/status';
 
 const insertOrder = async ({
@@ -160,7 +160,6 @@ const insertOrder = async ({
   }
 };
 
-
 const updateOrder = async ({
   orderId,
   status,
@@ -219,6 +218,10 @@ const updateOrder = async ({
 
     const notificationMessage = () => {
       switch (status) {
+        case 0:
+          return 'Your order has been confirmed';
+        case 1:
+          return 'Your order is being processed';
         case 2:
           return 'Your order has been delivered';
         case 3:
@@ -239,11 +242,16 @@ const updateOrder = async ({
       { transaction: t }
     );
 
-    io.emit('orderUpdate', {
-      orderId: order.orderId,
-      status: status,
-      message: notificationMessage(),
-    });
+    const socketId = userSockets.get(order.userId);
+    if (socketId) {
+      io.to(socketId).emit('orderUpdate', {
+        userId: order.userId,
+        orderId,
+        title: notificationTitle,
+        message: notificationMessage(),
+        notificationDate: new Date(),
+      });
+    }
 
     await t.commit();
 
@@ -296,10 +304,10 @@ const getOrders = async () => {
   } catch (error: any) {
     throw new Error(error.message);
   }
-}
+};
 
 export default {
   insertOrder,
   updateOrder,
-  getOrders
+  getOrders,
 };

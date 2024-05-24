@@ -1,20 +1,21 @@
 import cors from 'cors';
 import * as dotenv from 'dotenv';
 import express from 'express';
-import checkToken from './authentication/auth';
-import connect from './database/database';
 import http from 'http';
 import { Server } from 'socket.io';
+import checkToken from './authentication/auth';
+import connect from './database/database';
 
+import { relationship } from './models/relationship';
 import {
   categoriesRouter,
   orderRouter,
   productsRouter,
   usersRouter,
 } from './routes/index';
-import { relationship } from './models/relationship';
 
 dotenv.config();
+export const userSockets = new Map();
 
 const app = express();
 const server = http.createServer(app);
@@ -60,8 +61,18 @@ server.listen(port, async () => {
 
 io.on('connection', (socket) => {
   console.log('Client connected');
+  socket.on('register', (userId) => {
+    userSockets.set(userId, socket.id);
+    console.log(userSockets);
+  });
 
   socket.on('disconnect', () => {
     console.log('Client disconnected');
+    for (const [userId, id] of userSockets.entries()) {
+      if (id === socket.id) {
+        userSockets.delete(userId);
+        break;
+      }
+    }
   });
 });
