@@ -12,7 +12,7 @@ import {
   ProductSize,
   User,
 } from '../models/index';
-import { emitNotification } from '../server';
+import { socketIO, socketUser } from '../server';
 import { statusDefault } from '../utils/constants/status';
 
 const insertOrder = async ({
@@ -242,13 +242,16 @@ const updateOrder = async ({
       { transaction: t }
     );
 
-    emitNotification(order.userId, {
-      userId: order.userId,
-      orderId,
-      title: notificationTitle,
-      message: notificationMessage(),
-      notificationDate: new Date(),
-    });
+    const socketId = socketUser.get(order.userId);
+    if (socketId) {
+      socketIO.to(socketId).emit('orderUpdate', {
+        userId: order.userId,
+        orderId,
+        title: notificationTitle,
+        message: notificationMessage(),
+        notificationDate: new Date(),
+      });
+    }
 
     await t.commit();
 

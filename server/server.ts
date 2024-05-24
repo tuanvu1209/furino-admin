@@ -77,13 +77,5 @@ io.on('connection', (socket) => {
   });
 });
 
-const emitNotification = (userId: number, notification: any) => {
-  const socketId = userSockets.get(userId);
-  if (socketId) {
-    io.to(socketId).emit('notification', notification);
-  }
-};
-
-export { emitNotification };
-
-// export { io, userSockets };
+export const socketIO = io
+export const socketUser = userSockets
