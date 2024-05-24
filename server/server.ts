@@ -1,7 +1,7 @@
 import cors from 'cors';
 import * as dotenv from 'dotenv';
 import express from 'express';
-import http from 'http';
+import https from 'https';
 import { Server } from 'socket.io';
 import checkToken from './authentication/auth';
 import connect from './database/database';
@@ -18,7 +18,7 @@ dotenv.config();
 export const userSockets = new Map();
 
 const app = express();
-const server = http.createServer(app);
+const server = https.createServer(app);
 export const io = new Server(server, {
   cors: {
     origin: '*',
