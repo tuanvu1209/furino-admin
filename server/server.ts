@@ -15,7 +15,6 @@ import {
 } from './routes/index';
 
 dotenv.config();
-export const userSockets = new Map();
 
 const app = express();
 const server = http.createServer(app);
@@ -25,6 +24,7 @@ export const io = new Server(server, {
     methods: ['GET', 'POST'],
   },
 });
+// export const userSockets = new Map();
 const port = process.env.PORT ?? 3001;
 
 relationship();
