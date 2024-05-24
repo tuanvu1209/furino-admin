@@ -1,8 +1,8 @@
 import cors from 'cors';
 import * as dotenv from 'dotenv';
 import express from 'express';
-// import http from 'http';
-// import { Server } from 'socket.io';
+import http from 'http';
+import { Server } from 'socket.io';
 import checkToken from './authentication/auth';
 import connect from './database/database';
 
@@ -15,16 +15,16 @@ import {
 } from './routes/index';
 
 dotenv.config();
-// export const userSockets = new Map();
+export const userSockets = new Map();
 
 const app = express();
-// const server = http.createServer(app);
-// export const io = new Server(server, {
-//   cors: {
-//     origin: '*',
-//     methods: ['GET', 'POST'],
-//   },
-// });
+const server = http.createServer(app);
+export const io = new Server(server, {
+  cors: {
+    origin: '*',
+    methods: ['GET', 'POST'],
+  },
+});
 const port = process.env.PORT ?? 3001;
 
 relationship();
@@ -54,7 +54,7 @@ app.get('/admin', (req, res) => {
   res.send('response from root router admin');
 });
 
-app.listen(port, async () => {
+server.listen(port, async () => {
   await connect();
   console.log(`listening on port: ${port}`);
 });
