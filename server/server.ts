@@ -1,8 +1,8 @@
 import cors from 'cors';
 import * as dotenv from 'dotenv';
 import express from 'express';
-import http from 'http';
-import { Server } from 'socket.io';
+// import http from 'http';
+// import { Server } from 'socket.io';
 import checkToken from './authentication/auth';
 import connect from './database/database';
 
@@ -18,13 +18,13 @@ dotenv.config();
 export const userSockets = new Map();
 
 const app = express();
-const server = http.createServer(app);
-export const io = new Server(server, {
-  cors: {
-    origin: '*',
-    methods: ['GET', 'POST'],
-  },
-});
+// const server = http.createServer(app);
+// export const io = new Server(server, {
+//   cors: {
+//     origin: '*',
+//     methods: ['GET', 'POST'],
+//   },
+// });
 const port = process.env.PORT ?? 3001;
 
 relationship();
@@ -59,20 +59,20 @@ app.listen(port, async () => {
   console.log(`listening on port: ${port}`);
 });
 
-io.on('connection', (socket) => {
-  console.log('Client connected');
-  socket.on('register', (userId) => {
-    userSockets.set(userId, socket.id);
-    console.log(userSockets);
-  });
+// io.on('connection', (socket) => {
+//   console.log('Client connected');
+//   socket.on('register', (userId) => {
+//     userSockets.set(userId, socket.id);
+//     console.log(userSockets);
+//   });
 
-  socket.on('disconnect', () => {
-    console.log('Client disconnected');
-    for (const [userId, id] of userSockets.entries()) {
-      if (id === socket.id) {
-        userSockets.delete(userId);
-        break;
-      }
-    }
-  });
-});
+//   socket.on('disconnect', () => {
+//     console.log('Client disconnected');
+//     for (const [userId, id] of userSockets.entries()) {
+//       if (id === socket.id) {
+//         userSockets.delete(userId);
+//         break;
+//       }
+//     }
+//   });
+// });
