@@ -18,11 +18,6 @@ export default function checkToken(
 
   const url = req.url.toLowerCase().trim();
 
-  if (url.startsWith('/socket.io')) {
-    next();
-    return;
-  }
-
   if (unauthenticatedUrls.includes(url) || url.startsWith('/products')) {
     next();
     return;
