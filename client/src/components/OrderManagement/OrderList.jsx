@@ -268,7 +268,7 @@ const OrderList = ({ orders, limitOffset }) => {
 
   const ChangeStatus = () => {
     return (
-      <div className=''>
+      <div className='p-4'>
         <h2 className='text-xl font-bold text-black text-auto'>
           Are you sure you want change status to{' '}
           {dataChange?.status == 0
@@ -282,7 +282,7 @@ const OrderList = ({ orders, limitOffset }) => {
         <div className='flex justify-between pt-5'>
           <Button
             onClick={handleCloseModal}
-            sx={{ color: 'black' }}
+            
           >
             Cancel
           </Button>

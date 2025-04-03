@@ -5,12 +5,12 @@ const LoadingPage = () => {
         <button
           disabled
           type='button'
-          className='py-2.5 px-5 mr-2 text-sm font-medium text-gray-900 bg-white rounded-lg  hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600  inline-flex items-center'
+          className='py-2.5 px-5 mr-2 text-sm font-medium text-white rounded-lg   focus:z-10 focus:ring-4 focus:outline-none focus:ring-blue-700 focus:text-blue-700  dark:border-gray-600  inline-flex items-center bg-primary'
         >
           <svg
             aria-hidden='true'
             role='status'
-            className='inline w-4 h-4 mr-3 text-gray-200 animate-spin dark:text-gray-600'
+            className='inline w-4 h-4 mr-3 text-white animate-spin '
             viewBox='0 0 100 101'
             fill='none'
             xmlns='http://www.w3.org/2000/svg'

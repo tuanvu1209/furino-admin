@@ -45,13 +45,6 @@ function AccountManagement() {
         <span>Account Manager</span>
         <Button
           variant='contained'
-          sx={{
-            color: 'white',
-            backgroundColor: 'black',
-            '&:hover': {
-              backgroundColor: 'black',
-            },
-          }}
           onClick={handleOpen}
         >
           Add Account

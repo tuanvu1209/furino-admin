@@ -56,12 +56,6 @@ export function Product() {
         <div className="flex gap-2">
           <Button
             variant="contained"
-            sx={{
-              background: 'black',
-              '&:hover': {
-                backgroundColor: 'black',
-              },
-            }}
             id="basic-button"
             onClick={handleClickMenu}
           >
@@ -69,12 +63,6 @@ export function Product() {
           </Button>
           <Button
             variant="contained"
-            sx={{
-              background: 'black',
-              '&:hover': {
-                backgroundColor: 'black',
-              },
-            }}
             onClick={handleOpenModal}
           >
             Add Product

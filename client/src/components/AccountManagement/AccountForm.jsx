@@ -160,7 +160,6 @@ function AccountForm({ action, account, onClose, limitOffset }) {
             </div>
             <div className='flex justify-between'>
               <Button
-                sx={{ color: 'black' }}
                 onClick={onClose}
               >
                 Discard

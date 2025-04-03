@@ -18,7 +18,7 @@ export default function checkToken(
 
   const url = req.url.toLowerCase().trim();
 
-  if (unauthenticatedUrls.includes(url) || url.startsWith('/products')) {
+  if (unauthenticatedUrls.includes(url) || url.startsWith('/admin/products')) {
     next();
     return;
   }

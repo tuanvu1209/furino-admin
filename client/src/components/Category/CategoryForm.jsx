@@ -96,7 +96,6 @@ function CategoryForm({ onClose, category, action }) {
           <div className="flex justify-between">
             <Button
               onClick={onClose}
-              sx={{ color: 'black' }}
             >
               Discard
             </Button>

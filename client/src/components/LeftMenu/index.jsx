@@ -71,7 +71,7 @@ function LeftMenu() {
                   to={item.to}
                   className={`flex px-[10px] rounded-[3px] gap-4 items-center ${
                     location.pathname === item.to
-                      ? 'text-white bg-black'
+                      ? 'text-white bg-primary'
                       : 'text-black'
                   }`}
                 >

@@ -36,7 +36,7 @@ function Login() {
       <div className='bg-login'>
         <div className='container-small flex flex-col justify-center items-center h-full'>
           <div>
-            <div className='form w-full bg-gradient-to-b from-[#0f1049] rounded-2xl shadow-2xl p-7 '>
+            <div className='form w-full bg-gradient-to-b from-[#ff0f0f] rounded-2xl shadow-2xl p-7 '>
               <form className='flex flex-col' onSubmit={formik.handleSubmit}>
                 <div className=' flex justify-center items-center pb-9 ml-[135px] mr-[135px]'>
                   <div className='bg-white p-8 rounded-full'>

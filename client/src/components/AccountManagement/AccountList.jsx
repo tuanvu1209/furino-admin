@@ -78,7 +78,7 @@ const AccountList = ({ accounts, limitOffset }) => {
   const handleOpenMenuDisable = (event, params) => {
     const newDisableList = disableMenu.filter((item) =>
       params.status === 'Enable' ? item.value === 0 : item.value === 1
-  );
+    );
     setDisableList(newDisableList);
     setMenuDisable(event.currentTarget);
     setUser(params);
@@ -137,23 +137,21 @@ const AccountList = ({ accounts, limitOffset }) => {
       sortable: false,
       renderCell: (params) => (
         <div className='flex gap-2 items-center'>
-          <Tooltip title='Change Status'>
-            <Button
-              variant='outlined'
-              id='basic-button'
-              sx={{
-                color: 'black',
-                borderColor: 'black',
-                backgroundColor: 'white',
-                '&:hover': { background: 'black', color: 'white' },
-                textTransform: 'capitalize',
-              }}
-              aria-haspopup='true'
-              onClick={(event) => handleOpenMenuRole(event, params.row)}
-            >
-              {params.value}
-            </Button>
-          </Tooltip>
+          <Button
+            variant='outlined'
+            id='basic-button'
+            sx={{
+              color: 'black',
+              borderColor: 'black',
+              backgroundColor: 'white',
+              '&:hover': { background: 'black', color: 'white' },
+              textTransform: 'capitalize',
+            }}
+            aria-haspopup='true'
+            onClick={(event) => handleOpenMenuRole(event, params.row)}
+          >
+            {params.value}
+          </Button>
         </div>
       ),
     },
@@ -164,23 +162,21 @@ const AccountList = ({ accounts, limitOffset }) => {
       sortable: false,
       renderCell: (params) => (
         <div className='flex gap-2 items-center'>
-          <Tooltip title='Change status'>
-            <Button
-              variant='outlined'
-              id='basic-button'
-              sx={{
-                color: 'black',
-                borderColor: 'black',
-                backgroundColor: 'white',
-                '&:hover': { background: 'black', color: 'white' },
-                textTransform: 'capitalize',
-              }}
-              aria-haspopup='true'
-              onClick={(event) => handleOpenMenuDisable(event, params.row)}
-            >
-              {params.value}
-            </Button>
-          </Tooltip>
+          <Button
+            variant='outlined'
+            id='basic-button'
+            sx={{
+              color: 'black',
+              borderColor: 'black',
+              backgroundColor: 'white',
+              '&:hover': { background: 'black', color: 'white' },
+              textTransform: 'capitalize',
+            }}
+            aria-haspopup='true'
+            onClick={(event) => handleOpenMenuDisable(event, params.row)}
+          >
+            {params.value}
+          </Button>
         </div>
       ),
     },

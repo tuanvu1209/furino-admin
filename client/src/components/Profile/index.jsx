@@ -66,7 +66,7 @@ export function Profile() {
             className='p-0'
             aria-expanded={open ? 'true' : undefined}
           >
-            <Avatar sx={{ width: 32, height: 32, padding: 0, background: 'white', color: 'black' }}></Avatar>
+            <Avatar sx={{ width: 32, height: 32, padding: 0, background: 'white', color: 'blue' }}></Avatar>
           </IconButton>
         </Tooltip>
       </Box>
@@ -124,7 +124,7 @@ export function Profile() {
         aria-describedby='modal-modal-description'
       >
         <Box sx={style}>
-          <div className=''>
+          <div className='p-4'>
             <h2 className='text-xl font-bold text-black text-auto'>
               Are you sure you want Logout?
             </h2>

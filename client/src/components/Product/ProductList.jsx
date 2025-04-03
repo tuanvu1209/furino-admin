@@ -203,14 +203,14 @@ const ProductList = ({ limitOffset }) => {
       >
         <Box sx={style}>
           {action === 'delete' ? (
-            <div className=''>
+            <div className='p-4'>
               <h2 className='text-xl font-bold text-black text-auto'>
                 Are you sure you want to delete the product?
               </h2>
               <div className='flex justify-between pt-5'>
                 <Button
                   onClick={handleClose}
-                  sx={{ color: 'black' }}
+                  
                 >
                   Cancel
                 </Button>

@@ -11,13 +11,6 @@ function ButtonSubmit({ content = '', onSubmit }) {
         type="submit"
         onClick={onSubmit}
         loading={isLoadingButton}
-        sx={{
-          color: 'white',
-          background: 'black',
-          '&:hover': {
-            backgroundColor: 'black',
-          },
-        }}
         variant="contained"
       >
         <span>{content}</span>

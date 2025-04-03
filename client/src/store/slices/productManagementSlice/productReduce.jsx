@@ -17,9 +17,6 @@ const getDataProduct = createAsyncThunk(
           categoryId,
           keyword,
         },
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
       });
 
       const categories = await axios.get(`${baseURL}/categories`, {

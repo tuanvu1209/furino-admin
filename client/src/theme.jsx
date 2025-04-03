@@ -13,6 +13,13 @@ export const theme = createTheme({
         //   padding: '16px 40px',
           textTransform: 'capitalize',
         },
+        contained: {
+          backgroundColor: '#7a7af7', // Màu nền mặc định cho variant="contained"
+          color: '#fff',
+          '&:hover': {
+            backgroundColor: '#135ba1', // Màu hover
+          },
+        },
         outlined: {
           border: '1px solid black',
           color: 'black',
