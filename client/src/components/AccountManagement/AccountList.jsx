@@ -24,6 +24,9 @@ const dataGridClass = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    '&:focus': {
+      outline: 'none',
+    },
   },
 };
 
@@ -194,7 +197,6 @@ const AccountList = ({ accounts, limitOffset }) => {
 
   return (
     <div className='overflow-scroll'>
-      <h2 className='text-2xl font-bold mb-4 text-black'>Account Manager</h2>
       <div style={{ height: 'calc(100vh - 160px)' }}>
         <DataGrid
           rows={rows}

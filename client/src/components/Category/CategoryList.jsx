@@ -128,7 +128,7 @@ const CategoryList = ({ onOpenMenu, onHandleCloseMenu, anchorEl }) => {
               action={action}
             />
           ) : (
-            <div className="p-4">
+            <div className="">
               <h2 className="text-xl font-bold text-black text-auto">
                 Are you sure you want to delete the category?
               </h2>

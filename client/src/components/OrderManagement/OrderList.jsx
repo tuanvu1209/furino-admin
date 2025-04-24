@@ -7,6 +7,7 @@ import { BiDetail } from 'react-icons/bi';
 import { useDispatch } from 'react-redux';
 import { changeStatusOrder } from '../../store/slices/productManagementSlice/productReduce';
 import ButtonSubmit from '../common/ButtonSubmit';
+import { format } from 'date-fns';
 
 const style = {
   position: 'absolute',
@@ -35,6 +36,9 @@ const dataGridClass = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    '&:focus': {
+      outline: 'none',
+    },
   },
 };
 
@@ -95,11 +99,15 @@ const OrderList = ({ orders, limitOffset }) => {
   }, [orders]);
 
   const columns = [
-    { field: 'id', headerName: 'ID', width: 220 },
+    { field: 'id', headerName: 'ID', width: 100 },
     {
       field: 'orderDate',
       headerName: 'Order Date',
-      width: 160,
+      width: 150,
+      valueGetter: (params) => {
+        const date = new Date(params.row.orderDate);
+        return format(date, 'dd-MM-yyyy HH:mm:ss'); // Format as "2025-04-24 05:04:54"
+      },
     },
     {
       field: 'quantity',
@@ -119,7 +127,7 @@ const OrderList = ({ orders, limitOffset }) => {
     {
       field: 'userId',
       headerName: 'UserID',
-      width: 220,
+      width: 100,
     },
     {
       field: 'name',
@@ -129,7 +137,12 @@ const OrderList = ({ orders, limitOffset }) => {
     {
       field: 'address',
       headerName: 'Address',
-      width: 150,
+      width: 250,
+      renderCell: (params) => (
+        <Tooltip title={params.value}>
+          <span className="w-full block truncate">{params.value}</span>
+        </Tooltip>
+      ),
     },
     {
       field: 'phoneNumber',
@@ -268,7 +281,7 @@ const OrderList = ({ orders, limitOffset }) => {
 
   const ChangeStatus = () => {
     return (
-      <div className='p-4'>
+      <div className=''>
         <h2 className='text-xl font-bold text-black text-auto'>
           Are you sure you want change status to{' '}
           {dataChange?.status == 0
@@ -297,7 +310,6 @@ const OrderList = ({ orders, limitOffset }) => {
 
   return (
     <div className='overflow-scroll'>
-      <h2 className='text-2xl font-bold mb-4 text-black'>Order Manager</h2>
       <div style={{ height: 'calc(100vh - 160px)' }}>
         <DataGrid
           rows={rows}

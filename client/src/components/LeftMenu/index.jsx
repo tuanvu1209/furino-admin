@@ -59,7 +59,7 @@ function LeftMenu() {
     <div>
       <menu
         ref={leftMenuRef}
-        className={`pl-4 pt-6 md:pt-[80px] transition-[width] md:top-0 left-0 z-[40] duration-300 group fixed md:sticky top-[56px]  bg-Neutral10-0 ${
+        className={`pl-4 pt-6 md:pt-[80px] transition-[width] md:top-0 left-0 z-[40] duration-300 group fixed md:sticky top-[56px]  bg-[#1e1e2f] ${
           showMenu ? 'w-60' : 'w-2'
         } min-h-[100vh] border-r`}
       >
@@ -69,9 +69,9 @@ function LeftMenu() {
               <li key={index}>
                 <Link
                   to={item.to}
-                  className={`flex px-[10px] rounded-[3px] gap-4 items-center ${
+                  className={`flex hover:bg-[#2e2e4d] hover:outline-[#4e4ef1] hover:outline-l-4 px-[10px] rounded-[3px] text-white gap-4 items-center ${
                     location.pathname === item.to
-                      ? 'text-white bg-primary'
+                      ? 'text-white bg-[#4e4ef1] font-bold hover:bg-[#4e4ef1] hover:outline-none'
                       : 'text-black'
                   }`}
                 >

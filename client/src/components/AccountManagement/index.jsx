@@ -41,8 +41,8 @@ function AccountManagement() {
 
   return (
     <div>
-      <div className='flex justify-between items-center full-w py-4 text-black'>
-        <span>Account Manager</span>
+      <div className='flex justify-between items-center full-w py-7 text-black'>
+        <span className='text-2xl font-bold text-black'>Account Manager</span>
         <Button
           variant='contained'
           onClick={handleOpen}

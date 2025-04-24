@@ -50,28 +50,34 @@ export function Product() {
   };
 
   return (
-    <div>
-      <div className="flex justify-between items-center full-w py-4 text-black">
-        <span>Product Manager</span>
-        <div className="flex gap-2">
+    <div className='bg-white shadow-[0px_4px_12px_rgba(0,0,0,0.05)] rounded-[12px]'>
+      <div className='flex justify-between items-center full-w py-7 text-black'>
+        <span className='text-2xl font-bold text-black'>Product Manager</span>
+        <div className='flex gap-2'>
           <Button
-            variant="contained"
-            id="basic-button"
+            variant='contained'
+            sx={{
+              backgroundColor: '#4e4ef1',
+              '&:hover': { backgroundColor: '#3a3ae1' },
+            }}
+            id='basic-button'
             onClick={handleClickMenu}
           >
             Category
           </Button>
           <Button
-            variant="contained"
+            variant='contained'
+            sx={{
+              backgroundColor: '#4e4ef1',
+              '&:hover': { backgroundColor: '#3a3ae1' },
+            }}
             onClick={handleOpenModal}
           >
             Add Product
           </Button>
         </div>
       </div>
-      <ProductList
-        limitOffset={limitOffset}
-      />
+      <ProductList limitOffset={limitOffset} />
       <CategoryList
         onOpenMenu={openMenu}
         onHandleCloseMenu={handleCloseMenu}
@@ -80,13 +86,13 @@ export function Product() {
       <Modal
         open={openModal}
         onClose={handleCloseModal}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+        aria-labelledby='modal-modal-title'
+        aria-describedby='modal-modal-description'
       >
         <Box sx={style}>
           <ProductForm
             onClose={handleCloseModal}
-            action="create"
+            action='create'
             limitOffset={limitOffset}
           />
         </Box>

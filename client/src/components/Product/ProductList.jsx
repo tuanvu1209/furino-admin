@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { Box, Button, Modal, Tooltip } from '@mui/material';
+import { Box, Modal } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { BiDetail } from 'react-icons/bi';
 
@@ -10,6 +10,10 @@ import { optionLimit } from '../../assets/enum/constants';
 import { deleteProduct } from '../../store/slices/productManagementSlice/productReduce';
 import ButtonSubmit from '../common/ButtonSubmit';
 import ProductForm from './ProductForm';
+import { Clock } from 'lucide-react';
+import { format } from 'date-fns';
+import Tooltip from '@mui/material/Tooltip';
+import Button from '@mui/material/Button';
 
 const style = {
   position: 'absolute',
@@ -36,6 +40,16 @@ const dataGridClass = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    '&:focus': {
+      outline: 'none',
+    },
+  },
+  '& .MuiDataGrid-row': {
+    // hover
+    '&:hover': {
+      backgroundColor: '#f9f9ff',
+      transition: '0.3s',
+    },
   },
 };
 
@@ -71,7 +85,7 @@ const ProductList = ({ limitOffset }) => {
   const handleClose = () => setOpen(false);
 
   const columns = [
-    { field: 'id', headerName: 'ID', width: 130 },
+    { field: 'id', headerName: 'ID', width: 100 },
     {
       field: 'image',
       headerName: 'Images',
@@ -79,6 +93,7 @@ const ProductList = ({ limitOffset }) => {
       renderCell: (params) => (
         <img
           src={params.value}
+          className='rounded-[8px] shadow-sm w-10 h-10 object-cover'
           alt='Product'
           style={{
             width: '100px',
@@ -100,7 +115,7 @@ const ProductList = ({ limitOffset }) => {
       width: 160,
       renderCell: (params) => (
         <Tooltip title={params.value}>
-          <span>{params.value}</span>
+          <span className='truncate block w-full'>{params.value}</span>
         </Tooltip>
       ),
     },
@@ -126,13 +141,29 @@ const ProductList = ({ limitOffset }) => {
       field: 'createdAt',
       headerName: 'Created At',
       width: 150,
+      valueGetter: (params) => {
+        const date = new Date(params.row.createdAt);
+        return format(date, 'dd-MM-yyyy HH:mm:ss'); // Format as "24-04-2025 05:04:54"
+      },
+      renderCell: (params) => (
+        <Tooltip
+          title={params.value}
+          className='flex items-center gap-1 text-gray-600 text-sm'
+        >
+          <Clock size={16} />
+          <span>{params.value}</span>
+        </Tooltip>
+      ),
     },
     {
-      field: 'updatedAp',
-      headerName: 'Update At',
+      field: 'updatedAt',
+      headerName: 'Updated At',
       width: 150,
+      valueGetter: (params) => {
+        const date = new Date(params.row.updatedAt);
+        return format(date, 'dd-MM-yyyy HH:mm:ss'); // Format as "24-04-2025 05:04:54"
+      },
     },
-
     {
       field: 'action',
       headerName: 'Action',
@@ -146,20 +177,20 @@ const ProductList = ({ limitOffset }) => {
               '&:hover': { background: 'black', color: 'white' },
             }}
             variant='outlined'
-            onClick={() => handleDelete(params.row)}
-          >
-            <AiOutlineDelete size={24} />
-          </Button>
-          <Button
-            sx={{
-              color: 'black',
-              borderColor: 'black',
-              '&:hover': { background: 'black', color: 'white' },
-            }}
-            variant='outlined'
             onClick={() => handleEdit(params.row)}
           >
             <BiDetail size={24} />
+          </Button>
+          <Button
+            sx={{
+              color: 'red',
+              borderColor: 'red',
+              '&:hover': { background: 'red', color: 'white' },
+            }}
+            variant='outlined'
+            onClick={() => handleDelete(params.row)}
+          >
+            <AiOutlineDelete size={24} />
           </Button>
         </div>
       ),
@@ -174,13 +205,12 @@ const ProductList = ({ limitOffset }) => {
     price: item?.productInventories[0].price,
     categoryId: item.name,
     createdAt: item?.createdAt,
-    updatedAp: item?.updatedAt,
+    updatedAt: item?.updatedAt,
     image: item.productGeneralImages[0]?.image,
   }));
 
   return (
     <div className='overflow-scroll'>
-      <h2 className='text-2xl font-bold mb-4 text-black'>Product List</h2>
       <div style={{ height: 'calc(100vh - 160px)' }}>
         <DataGrid
           rows={rows}
@@ -203,17 +233,12 @@ const ProductList = ({ limitOffset }) => {
       >
         <Box sx={style}>
           {action === 'delete' ? (
-            <div className='p-4'>
+            <div className=''>
               <h2 className='text-xl font-bold text-black text-auto'>
                 Are you sure you want to delete the product?
               </h2>
               <div className='flex justify-between pt-5'>
-                <Button
-                  onClick={handleClose}
-                  
-                >
-                  Cancel
-                </Button>
+                <Button onClick={handleClose}>Cancel</Button>
                 <ButtonSubmit
                   content='Delete'
                   onSubmit={handleSubmitDelete}

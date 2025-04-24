@@ -30,8 +30,8 @@ function OrderManagement() {
 
   return (
     <div>
-      <div className="flex justify-between items-center full-w py-4 text-black h-[68.5px]">
-        <span>Order Manager</span>
+      <div className="flex justify-between items-center full-w py-7 text-black h-[68.5px]">
+        <span className='text-2xl font-bold text-black'>Order Manager</span>
       </div>
       <OrderList
         orders={orders}
